@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="qa-container">
+    <div class="row">
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+            <!-- Аватарка -->
+            <div class="align-items-center">
+                <img src="{% static "/img/avatar.jpg" %}" alt="Avatar" class="avatar">
+            </div>
+            <!-- Лайки и дизлайки -->
+            <div class="like-dislike mt-auto">
+                <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="5" class="like" onkeydown="return false;" onmousedown="return false;">
+                <button onclick="increaseValue()">↑</button>
+                <button onclick="decreaseValue()">↓</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <!-- Вопрос -->
+                <h5><a href="/templates/question.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</a></h5>
+            </div>
+            <div class="row">
+                <!-- Начало ответа -->
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam tortor nec quam ultricies, at rutrum erat ultricies. Donec nec gravida lorem, in sollicitudin metus. Mauris vitae fermentum est...</p>
+            </div>
+            <!-- Ссылки на ответы и список тегов -->
+            <div class="row tags mt-auto">
+                <small>
+                    <a href="#">Ответы (20)</a> |
+                    Теги:
+                    <span class="badge bg-primary">Bootstrap</span>
+                    <span class="badge bg-primary">HTML</span>
+                    <span class="badge bg-primary">CSS</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>

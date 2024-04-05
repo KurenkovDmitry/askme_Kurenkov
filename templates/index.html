@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="row align-items-lg-center">
+        <div class="col-4">
+            <h1>Новые вопросы</h1>
+        </div>
+        <div class="col-2">
+            <a href="#">Горячие вопросы</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <!-- Элемент Вопрос-ответ -->
+        {% for question in questions %}
+            {% include 'components/question.html' %}
+        {% endfor %}
+
+        {% include 'components/pagination.html' %}
+
+    </div>
+
+{% endblock %}

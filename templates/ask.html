@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Новый вопрос</title>
+        <link rel="icon" href="/static/img/icon.ico?v=2" type="image/x-icon" />
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link
+          href="/static/css/bootstrap.css"
+          rel="stylesheet"
+        />
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/index.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/templates/index.html">
+                        <img src="/static/img/logo.gif" alt="Q&A Logo" height="120" width="120">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a href="/templates/login.html" class="nav-link">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/templates/signup.html" class="nav-link">Регистрация</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    language
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="#">Русский</a></li>
+                                    <li><a class="dropdown-item" href="#">English</a></li>
+                                    <li><a class="dropdown-item" href="#">Deutsch</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <form class="d-flex align-items-center">
+                            <input class="form-control me-2 flex-grow-2" type="search" placeholder="Поиск" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Поиск</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="my5">
+
+            <br>
+            <br>
+
+            <div class="container">
+                <div class="row">
+                    <h1 class="mb-4">Новый вопрос</h1> <!-- Заголовок "Вопросы" -->
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="h-100">
+                            <div class="row mt-4">
+                                <div class="col-md-2">
+                                    <label for="title" class="form-label">Название</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="title" placeholder="Введите название">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-2">
+                                    <label for="text" class="form-label">Текст</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control mt-2" id="text" rows="5" placeholder="Введите текст"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-2">
+                                    <label for="tags" class="form-label">Теги</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="tags" placeholder="Введите теги через запятую">
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-10">
+                                    <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <h2>Популярные теги</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">html</li>
+                                    <li class="list-group-item">css</li>
+                                    <li class="list-group-item">js</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">MySQL</li>
+                                    <li class="list-group-item">PostgreSQL</li>
+                                    <li class="list-group-item">Oracle</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h2 class="mt-5">Лучшие издатели</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><a class="Noni">Mr.Fredj</a></li>
+                                    <li class="list-group-item"><a class="Noni">Benefit</a></li>
+                                    <li class="list-group-item"><a class="Noni">Mr. Smith</a></li>
+                                    <li class="list-group-item"><a class="Noni">Mrs. Smith</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Основные страницы</h2>
+                        <ul class="list-unstyled">
+                            <li><a class="noni" href="/templates/login.html">Вход</a></li>
+                            <li><a class="noni" href="/templates/signup.html">Регистрация</a></li>
+                        </ul>
+                        <br/>
+                        <h2>Документация:</h2>
+                        <ul class="list-unstyled">
+                            <li><a class="noni" href="/static/pdf/pol_sogl.pdf" target="_blank">Пользовательское соглашение</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Контакты:</h2>
+                        <h3>&nbsp;&nbsp;Телефон:</h3>
+                        <ul class="list-unstyled">
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:+78888888888">+7 (888) 888-88-88</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:+78888888889">+7 (888) 888-88-89</a></li>
+                        </ul>
+                        <h3>&nbsp;&nbsp;Почта:</h3>
+                        <ul class="list-unstyled">
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_top" href="mailto:dimakurenkov333@gmail.com">dimakurenkov333@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
