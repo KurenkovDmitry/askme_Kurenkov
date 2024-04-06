@@ -2,9 +2,11 @@
 
 {% load static %}
 
+<title>Тег: {{ tag }}</title>
+
 {% block content %}
     <div class="row">
-        <h1 class="mb-4">Tag: {{ tag }}</h1> <!-- Заголовок "Вопросы" -->
+        <h1 class="mb-4">Тег: {{ tag }}</h1> <!-- Заголовок "Вопросы" -->
     </div>
     <!-- Элемент Вопрос-ответ -->
     {% for question in questions %}

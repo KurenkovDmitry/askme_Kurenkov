@@ -1,6 +1,5 @@
 from . import models
 from django.shortcuts import render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, JsonResponse
 
 
@@ -8,36 +7,16 @@ from django.http import HttpResponse, JsonResponse
 
 def index(request):
     user = True
-
-    paginator = Paginator(models.QUESTION, 5)
-
-    page = request.GET.get('page')
-
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-        page = 1
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-        page = paginator.num_pages
-
-    n = posts.paginator.num_pages
-
-    ran = []
-
-    for i in range(max(1, int(page) - 2), min(n, int(page) + 2) + 1):
-        ran.append(i)
-
-    if not (int(n) in ran):
-        ran.append('...')
-        ran.append(int(n))
-
-    if not (1 in ran):
-        ran = [1, '...'] + ran
-
+    posts, page, ran = models.paginate(models.QUESTION, request)
     given = {'questions': posts, 'user': user, 'page': page, 'range': ran}
     return render(request, 'index.html', given)
+
+
+def hot(request):
+    user = True
+    posts, page, ran = models.paginate(models.QUESTION, request)
+    given = {'questions': posts, 'user': user, 'page': page, 'range': ran}
+    return render(request, 'hot.html', given)
 
 
 def question(request, question_id):
@@ -68,40 +47,7 @@ def settings(request):
 
 def question_by_teg(request, tag):
     user = False
-    if tag[-1] == '/':
-        tag = tag[:-1]
-
-    questions_by_teg = []
-    for element in models.QUESTION:
-        if tag in element['tags']:
-            questions_by_teg.append(element)
-
-    paginator = Paginator(questions_by_teg, 5)
-
-    page = request.GET.get('page')
-
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-        page = 1
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-        page = paginator.num_pages
-
-    n = posts.paginator.num_pages
-
-    ran = []
-
-    for i in range(max(1, int(page) - 2), min(n, int(page) + 2) + 1):
-        ran.append(i)
-
-    if not (int(n) in ran):
-        ran.append('...')
-        ran.append(int(n))
-
-    if not (1 in ran):
-        ran = [1, '...'] + ran
-
+    questions_by_teg = models.tags_questions(tag, models.QUESTION)
+    posts, page, ran = models.paginate(questions_by_teg, request)
     given = {'questions': posts, 'tag': tag, 'user': user, 'page': page, 'range': ran}
     return render(request, 'questions_by_teg.html', given)
