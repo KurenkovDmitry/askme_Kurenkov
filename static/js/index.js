@@ -11,16 +11,16 @@ sortingButtons.forEach(button => {
     });
 });
 
-function increaseValue() {
-    let value = parseInt(document.getElementById('tentacles').value, 10);
+function increaseValue(QuestionID) {
+    let value = parseInt(document.getElementById(`like${QuestionID}`).value, 10);
     value = isNaN(value) ? 0 : value;
     value++;
-    document.getElementById('tentacles').value = value;
+    document.getElementById(`like${QuestionID}`).value = value;
 }
 
-function decreaseValue() {
-    let value = parseInt(document.getElementById('tentacles').value, 10);
+function decreaseValue(QuestionID) {
+    let value = parseInt(document.getElementById(`like${QuestionID}`).value, 10);
     value = isNaN(value) ? 0 : value;
     value--;
-    document.getElementById('tentacles').value = value;
+    document.getElementById(`like${QuestionID}`).value = value;
 }

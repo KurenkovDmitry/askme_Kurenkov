@@ -3,7 +3,6 @@
 {% load static %}
 
 {% block content %}
-
     <div class="row align-items-lg-center">
         <div class="col-4">
             <h1>Новые вопросы</h1>
@@ -18,11 +17,10 @@
     <div class="container">
         <!-- Элемент Вопрос-ответ -->
         {% for question in questions %}
-            {% include 'components/question.html' %}
+            {% include 'components/question_item.html' %}
         {% endfor %}
 
-        {% include 'components/pagination.html' %}
+        {% include 'components/pagination.html' with page=questions %}
 
     </div>
-
 {% endblock %}

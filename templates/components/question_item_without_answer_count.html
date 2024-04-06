@@ -9,30 +9,33 @@
             </div>
             <!-- Лайки и дизлайки -->
             <div class="like-dislike mt-auto">
-                <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="5" class="like" onkeydown="return false;" onmousedown="return false;">
-                <button onclick="increaseValue()">↑</button>
-                <button onclick="decreaseValue()">↓</button>
+                <label for="like{{ question.id }}"></label>
+                <input type="number" id="like{{ question.id }}" name="like" value="{{ question.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
+                <button onclick="increaseValue('{{ question.id }}')">↑</button>
+                <button onclick="decreaseValue('{{ question.id }}')">↓</button>
             </div>
         </div>
         <div class="col-md-8">
             <div class="row">
                 <!-- Вопрос -->
-                <h5><a href="/templates/question.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</a></h5>
+                <h5><a href="{% url "question" question.id %}">{{ question.title }}</a></h5>
             </div>
             <div class="row">
                 <!-- Начало ответа -->
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam tortor nec quam ultricies, at rutrum erat ultricies. Donec nec gravida lorem, in sollicitudin metus. Mauris vitae fermentum est...</p>
+                <p>{{ question.content }}</p>
             </div>
             <!-- Ссылки на ответы и список тегов -->
             <div class="row tags mt-auto">
                 <small>
-                    <a href="#">Ответы (20)</a> |
+                    {% block count %}
+                    {% endblock %}
                     Теги:
-                    <span class="badge bg-primary">Bootstrap</span>
-                    <span class="badge bg-primary">HTML</span>
-                    <span class="badge bg-primary">CSS</span>
+                    {% for tag in question.tags %}
+                        <span class="badge bg-primary">{{ tag }}</span>
+                    {% endfor %}
                 </small>
             </div>
         </div>
     </div>
 </div>
+
