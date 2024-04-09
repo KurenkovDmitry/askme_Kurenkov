@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ответы</title>
+        <link rel="icon" type="image/png" href="/img/icon.ico">
+        <link rel="icon" href="/static/img/icon.ico?v=2" type="image/x-icon" />
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link
+          href="/static/css/bootstrap.css"
+          rel="stylesheet"
+        />
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/index.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/templates/index.html">
+                        <img src="/static/img/logo.gif" alt="Q&A Logo" height="120" width="120">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a href="/templates/login.html" class="nav-link">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/templates/signup.html" class="nav-link">Регистрация</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    language
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="#">Русский</a></li>
+                                    <li><a class="dropdown-item" href="#">English</a></li>
+                                    <li><a class="dropdown-item" href="#">Deutsch</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <form class="d-flex align-items-center">
+                            <input class="form-control me-2 flex-grow-2" type="search" placeholder="Поиск" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Поиск</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="my5">
+
+            <br>
+            <br>
+
+            <div class="container">
+                <div class="row flex-grow-1">
+                    <div class="col-md-8">
+                        <div class="qa-container">
+                            <div class="row">
+                                <div class="col-md-4 flex-column justify-content-between">
+                                    <!-- Аватарка -->
+                                    <div class="align-items-center">
+                                        <span class="circle-image">
+                                            <img src="/static/img/avatar.jpg" alt="Avatar" class="avatar">
+                                        </span>
+                                    </div>
+                                    <!-- Лайки и дизлайки -->
+                                    <div class="like-dislike mt-auto">
+                                        <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="5" class="like" onkeydown="return false;" onmousedown="return false;">
+                                        <button onclick="increaseValue()">↑</button>
+                                        <button onclick="decreaseValue()">↓</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <!-- Вопрос -->
+                                        <h5><a href="/templates/question.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit?</a></h5>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Начало ответа -->
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
+                                    <!-- Ссылки на ответы и список тегов -->
+                                    <div class="row tags mt-auto">
+                                        <small>
+                                            Теги:
+                                            <span class="badge bg-primary">Bootstrap</span>
+                                            <span class="badge bg-primary">HTML</span>
+                                            <span class="badge bg-primary">CSS</span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="horizontal-line"></div>
+                        <!-- Элемент ответ -->
+                        <div class="qa-container">
+                            <div class="row">
+                                <div class="col-md-4 d-flex flex-column justify-content-between">
+                                    <!-- Аватарка -->
+                                    <div class="align-items-center">
+                                        <span class="circle-image">
+                                            <img src="/static/img/avatar.jpg" alt="Avatar" class="avatar">
+                                        </span>
+                                    </div>
+                                    <!-- Лайки и дизлайки -->
+                                    <div class="like-dislike mt-auto">
+                                        <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="5" class="like" onkeydown="return false;" onmousedown="return false;">
+                                        <button onclick="increaseValue()">↑</button>
+                                        <button onclick="decreaseValue()">↓</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>HTML (HyperText Markup Language) - это стандартизированный язык разметки документов в сети Интернет.</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="answerCheckbox">
+                                        <label class="form-check-label" for="answerCheckbox">Верный ответ</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Элемент ответ -->
+                        <div class="qa-container">
+                            <div class="row">
+                                <div class="col-md-4 d-flex flex-column justify-content-between">
+                                    <!-- Аватарка -->
+                                    <div class="align-items-center">
+                                        <span class="circle-image">
+                                            <img src="/static/img/avatar.jpg" alt="Avatar" class="avatar">
+                                        </span>
+                                    </div>
+                                    <!-- Лайки и дизлайки -->
+                                    <div class="like-dislike mt-auto">
+                                        <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="5" class="like" onkeydown="return false;" onmousedown="return false;">
+                                        <button onclick="increaseValue()">↑</button>
+                                        <button onclick="decreaseValue()">↓</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>HTML (HyperText Markup Language) - это стандартизированный язык разметки документов в сети Интернет.</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="answerCheckbox1">
+                                        <label class="form-check-label" for="answerCheckbox1">Верный ответ</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="horizontal-line"></div>
+                        <div class="col-md-12 d-flex flex-column">
+                            <label for="text"></label><textarea class="form-control flex-grow-1" id="text" rows="5" placeholder="Введите ответ"></textarea>
+                            <br>
+                            <button type="button" class="btn btn-primary">Добавить ответ</button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <h2>Популярные теги</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">html</li>
+                                    <li class="list-group-item">css</li>
+                                    <li class="list-group-item">js</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item">MySQL</li>
+                                    <li class="list-group-item">PostgreSQL</li>
+                                    <li class="list-group-item">Oracle</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h2 class="mt-5">Лучшие издатели</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><a class="Noni">Mr.Fredj</a></li>
+                                    <li class="list-group-item"><a class="Noni">Benefit</a></li>
+                                    <li class="list-group-item"><a class="Noni">Mr. Smith</a></li>
+                                    <li class="list-group-item"><a class="Noni">Mrs. Smith</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-dark text-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Основные страницы</h2>
+                        <ul class="list-unstyled">
+                            <li><a class="noni" href="/templates/login.html">Вход</a></li>
+                            <li><a class="noni" href="/templates/signup.html">Регистрация</a></li>
+                        </ul>
+                        <br/>
+                        <h2>Документация:</h2>
+                        <ul class="list-unstyled">
+                            <li><a class="noni" href="/static/pdf/pol_sogl.pdf" target="_blank">Пользовательское соглашение</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Контакты:</h2>
+                        <h3>&nbsp;&nbsp;Телефон:</h3>
+                        <ul class="list-unstyled">
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:+78888888888">+7 (888) 888-88-88</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="tel:+78888888889">+7 (888) 888-88-89</a></li>
+                        </ul>
+                        <h3>&nbsp;&nbsp;Почта:</h3>
+                        <ul class="list-unstyled">
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;<a target="_top" href="mailto:dimakurenkov333@gmail.com">dimakurenkov333@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
