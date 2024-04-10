@@ -1,3 +1,7 @@
+{% load static %}
+
+<script src="{% static "/js/answer.js" %}"></script>
+
 <div class="qa-container">
     <div class="row">
         <div class="col-md-4 d-flex flex-column justify-content-between">
@@ -9,9 +13,10 @@
             </div>
             <!-- Лайки и дизлайки -->
             <div class="like-dislike mt-auto">
-                <label for="tentacles"></label><input type="number" id="tentacles" name="tentacles" value="{{ answer.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
-                <button onclick="increaseValue()">↑</button>
-                <button onclick="decreaseValue()">↓</button>
+                <label for="likes{{ answer.id }}"></label>
+                <input type="number" id="likes{{ answer.id }}" name="likes" value="{{ answer.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
+                <button onclick="AnsincreaseValue('likes{{ answer.id }}')">↑</button>
+                <button onclick="decreaseValueAns('likes{{ answer.id }}')">↓</button>
             </div>
         </div>
         <div class="col-md-8">

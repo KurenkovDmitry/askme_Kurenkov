@@ -25,11 +25,11 @@
                 <input type="password" class="form-control" id="password" placeholder="Введите пароль">
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="mt-4">
             <button type="submit" class="btn btn-primary mt-3">Авторизоваться</button>
         </div>
         <div class="row mt-4">
-            <a href="/templates/signup.html" class="text-center">Создать новый аккаунт</a>
+            <a href="{% url 'signup' %}" class="text-center">Создать новый аккаунт</a>
         </div>
     </form>
 {% endblock %}

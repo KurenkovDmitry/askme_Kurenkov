@@ -11,7 +11,7 @@ QUESTION = [
         'count_answers': i,
         'tags': ['Bootstrap', 'HTML', 'CSS'],
         'reiting': i + 7
-    } for i in range(11)
+    } for i in range(300)
 ]
 
 QUESTION[10]['tags'] = ['fff']
@@ -26,35 +26,37 @@ ANSWERS = [
 ]
 
 
-def paginate(objects_list, request, per_page=10):
-    paginator = Paginator(objects_list, per_page)
+class Paginate:
+    @staticmethod
+    def paginate(objects_list, request, per_page=10):
+        paginator = Paginator(objects_list, per_page)
 
-    page = request.GET.get('page')
+        page = request.GET.get('page')
 
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-        page = 1
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-        page = paginator.num_pages
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+            page = 1
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+            page = paginator.num_pages
 
-    n = posts.paginator.num_pages
+        n = posts.paginator.num_pages
 
-    ran = []
+        ran = []
 
-    for i in range(max(1, int(page) - 2), min(n, int(page) + 2) + 1):
-        ran.append(i)
+        for i in range(max(1, int(page) - 2), min(n, int(page) + 2) + 1):
+            ran.append(i)
 
-    if not (int(n) in ran):
-        ran.append('...')
-        ran.append(int(n))
+        if not (int(n) in ran):
+            ran.append('...')
+            ran.append(int(n))
 
-    if not (1 in ran):
-        ran = [1, '...'] + ran
+        if not (1 in ran):
+            ran = [1, '...'] + ran
 
-    return posts, page, ran
+        return posts, page, ran
 
 
 def tags_questions(tag, objects_list):
@@ -66,4 +68,4 @@ def tags_questions(tag, objects_list):
         if tag in element['tags']:
             questions_by_teg.append(element)
 
-    return questions_by_teg
+    return questions_by_teg, tag
