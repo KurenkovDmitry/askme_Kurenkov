@@ -1,37 +1,50 @@
+{%  load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="UTF-8">
-        <title>Example</title>
-        <link rel="icon" href="/static/img/icon.ico?v=2" type="image/x-icon" />
-        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="icon" href="{% static "/img/icon.ico?v=2" %}" type="image/x-icon" />
+        <link rel="stylesheet" href="{% static "/css/style.css" %}">
         <link
-          href="/static/css/bootstrap.css"
+          href="{% static "/css/bootstrap.css" %}"
           rel="stylesheet"
         />
-        <script src="/static/js/bootstrap.js"></script>
-        <script src="/static/js/index.js"></script>
+        <script src="{% static "/js/bootstrap.js" %}"></script>
+        <script src="{% static "/js/index.js" %}"></script>
+        <title>base</title>
     </head>
 
     <body>
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="/templates/index.html">
-                        <img src="/static/img/logo.gif" alt="Q&A Logo" height="120" width="120">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static "/img/logo.gif" %}" alt="Q&A Logo" height="120" width="120">
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a href="/templates/ask.html" class="nav-link">Задать вопрос</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/templates/settings.html" class="nav-link">Настройки</a>
-                            </li>
+                            {% if user %}
+                                <!-- Ссылки для зарегистрированных пользователей -->
+                                <li class="nav-item">
+                                    <a href="{% url 'ask' %}" class="nav-link">Задать вопрос</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'settings' %}" class="nav-link">Настройки</a>
+                                </li>
+                            {% else %}
+                                <!-- Ссылки для неаутентифицированных пользователей (войти и зарегистрироваться) -->
+                                <li class="nav-item">
+                                    <a href="{% url 'login' %}" class="nav-link">Войти</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'signup' %}" class="nav-link">Зарегистрироваться</a>
+                                </li>
+                            {% endif %}
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     language
@@ -48,14 +61,16 @@
                             <input class="form-control me-2 flex-grow-1" type="search" placeholder="Поиск" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Поиск</button>
 
-                            <!-- Картинка профиля -->
-                            <img src="/static/img/profile.png" alt="Profile" class="img" height="90" width="90">
+                            {% if user %}
+                                <!-- Картинка профиля -->
+                                <img src="{% static "/img/profile.png" %}" alt="Profile" class="img" height="90" width="90">
 
-                            <!-- Имя пользователя и ссылка на выход -->
-                            <div class="ms-2 text-light">
-                                <div class="text-light">John Doe</div>
-                                <div><a href="#" class="text-light">Выход</a></div>
-                            </div>
+                                <!-- Имя пользователя и ссылка на выход -->
+                                <div class="ms-2 text-light">
+                                    <div class="text-light">John Doe</div>
+                                    <div><a href="#" class="text-light">Выход</a></div>
+                                </div>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
@@ -63,21 +78,15 @@
         </header>
 
         <main class="my5">
-
-            <br>
-            <br>
-
             <div class="container-fluid">
-                <div class="row">
-                    <h1 class="mb-4">Example</h1> <!-- Заголовок "Вопросы" -->
-                </div>
+                <br>
                 <div class="row">
                     <div class="col-md-8">
+                        {% block content %}
 
-                        <!-- Блок под основную часть страницы -->
+                            Hello, it is empty item
 
-                        <p>example</p>
-
+                        {% endblock %}
                     </div>
                     <div class="col-md-4">
                         <h2>Популярные теги</h2>
@@ -120,13 +129,20 @@
                     <div class="col-md-6">
                         <h2>Основные страницы</h2>
                         <ul class="list-unstyled">
-                            <li><a class="noni" href="/templates/settings.html">Настройки</a></li>
-                            <li><a class="noni" href="/templates/index.html">Главная</a></li>
+                            {% if user %}
+                                <!-- Ссылки для зарегистрированных пользователей -->
+                                <li><a class="noni" href="{% url 'settings' %}">Настройки</a></li>
+                                <li><a class="noni" href="{% url 'index' %}">Главная</a></li>
+                            {% else %}
+                                <!-- Ссылки для неаутентифицированных пользователей (войти и зарегистрироваться) -->
+                                <li><a class="noni" href="{% url 'login' %}">Вход</a></li>
+                                <li><a class="noni" href="{% url 'signup' %}">Регистрация</a></li>
+                            {% endif %}
                         </ul>
                         <br/>
                         <h2>Документация:</h2>
                         <ul class="list-unstyled">
-                            <li><a class="noni" href="/static/pdf/pol_sogl.pdf" target="_blank">Пользовательское соглашение</a></li>
+                            <li><a class="noni" href="{% static "/pdf/pol_sogl.pdf" %}" target="_blank">Пользовательское соглашение</a></li>
                         </ul>
                     </div>
                     <div class="col-md-6">
