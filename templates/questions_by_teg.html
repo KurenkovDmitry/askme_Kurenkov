@@ -9,7 +9,7 @@
         <h1 class="mb-4">Тег: {{ tag }}</h1> <!-- Заголовок "Вопросы" -->
     </div>
     <!-- Элемент Вопрос-ответ -->
-    {% for question in questions %}
+    {% for question, key in questions.items %}
         {% include 'components/question_item.html' %}
     {% endfor %}
     {% include 'components/pagination.html' with page=questions %}

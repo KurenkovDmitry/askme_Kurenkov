@@ -18,7 +18,7 @@
 
     <div class="container">
         <!-- Элемент Вопрос-ответ -->
-        {% for question in questions %}
+        {% for question, key in questions.items %}
             {% include 'components/question_item.html' %}
         {% endfor %}
 

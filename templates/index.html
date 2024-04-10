@@ -7,10 +7,10 @@
 {% block content %}
     <div class="row align-items-lg-center">
         <div class="col-4">
-            <h1>Новые вопросы</h1>
+            <h1 class="dont">Новые вопросы</h1>
         </div>
         <div class="col-2">
-            <a href="{% url 'hot' %}">Горячие вопросы</a>
+            <a class="dont" href="{% url 'hot' %}">Горячие вопросы</a>
         </div>
     </div>
 
@@ -18,7 +18,7 @@
 
     <div class="container">
         <!-- Элемент Вопрос-ответ -->
-        {% for question in questions %}
+        {% for question, key in questions.items %}
             {% include 'components/question_item.html' %}
         {% endfor %}
 

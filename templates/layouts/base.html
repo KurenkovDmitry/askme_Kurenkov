@@ -92,16 +92,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="list-group">
-                                    <li class="list-group-item">html</li>
-                                    <li class="list-group-item">css</li>
-                                    <li class="list-group-item">js</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <ul class="list-group">
-                                    <li class="list-group-item">MySQL</li>
-                                    <li class="list-group-item">PostgreSQL</li>
-                                    <li class="list-group-item">Oracle</li>
+                                    {% for tag in tags %}
+                                        <li class="list-group-item">{{ tag.tag }}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -110,10 +103,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="list-group">
-                                    <li class="list-group-item"><a class="Noni">Mr.Fredj</a></li>
-                                    <li class="list-group-item"><a class="Noni">Benefit</a></li>
-                                    <li class="list-group-item"><a class="Noni">Mr. Smith</a></li>
-                                    <li class="list-group-item"><a class="Noni">Mrs. Smith</a></li>
+                                    {% for us in users %}
+                                         <li class="list-group-item"><a class="Noni">{{ us.name }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>

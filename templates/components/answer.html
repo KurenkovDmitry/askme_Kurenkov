@@ -14,15 +14,19 @@
             <!-- Лайки и дизлайки -->
             <div class="like-dislike mt-auto">
                 <label for="likes{{ answer.id }}"></label>
-                <input type="number" id="likes{{ answer.id }}" name="likes" value="{{ answer.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
+                <input type="number" id="likes{{ answer.id }}" name="likes" value="{{ answer.rating }}" class="like" onkeydown="return false;" onmousedown="return false;">
                 <button onclick="AnsincreaseValue('likes{{ answer.id }}')">↑</button>
                 <button onclick="decreaseValueAns('likes{{ answer.id }}')">↓</button>
             </div>
         </div>
         <div class="col-md-8">
-            <p>HTML (HyperText Markup Language) - это стандартизированный язык разметки документов в сети Интернет.</p>
+            <p>{{ answer.answer }}</p>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="answerCheckbox">
+                {% if answer.right %}
+                    <input class="form-check-input" type="checkbox" id="answerCheckbox" checked>
+                {% else %}
+                    <input class="form-check-input" type="checkbox" id="answerCheckbox">
+                {% endif %}
                 <label class="form-check-label" for="answerCheckbox">Верный ответ</label>
             </div>
         </div>

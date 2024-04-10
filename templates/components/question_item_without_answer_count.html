@@ -5,12 +5,16 @@
         <div class="col-md-4 d-flex flex-column justify-content-between">
             <!-- Аватарка -->
             <div class="align-items-center">
-                <img src="{% static "/img/avatar.jpg" %}" alt="Avatar" class="avatar">
+                {% if key.profile.avatar %}
+                    <img src="{% static 'img' %}{{ key.profile.avatar.url }}" alt="Avatar" class="avatar">
+                {% else %}
+                    <img src="{% static "/img/avatar.jpg" %}" alt="Avatar" class="avatar">
+                {% endif %}
             </div>
             <!-- Лайки и дизлайки -->
             <div class="like-dislike mt-auto">
                 <label for="like{{ question.id }}"></label>
-                <input type="number" id="like{{ question.id }}" name="like" value="{{ question.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
+                <input type="number" id="like{{ question.id }}" name="like" value="{{ question.rating }}" class="like" onkeydown="return false;" onmousedown="return false;">
                 <button onclick="increaseValue('{{ question.id }}')">↑</button>
                 <button onclick="decreaseValue('{{ question.id }}')">↓</button>
             </div>
@@ -22,7 +26,7 @@
             </div>
             <div class="row">
                 <!-- Начало ответа -->
-                <p>{{ question.content }}</p>
+                <p>{{ question.question }}</p>
             </div>
             <!-- Ссылки на ответы и список тегов -->
             <div class="row tags mt-auto">
@@ -30,8 +34,8 @@
                     {% block count %}
                     {% endblock %}
                     Теги:
-                    {% for tag in question.tags %}
-                        <span class="badge bg-primary">{{ tag }}</span>
+                    {% for tag in key.tags %}
+                        <span class="badge bg-primary">{{ tag.tag }}</span>
                     {% endfor %}
                 </small>
             </div>

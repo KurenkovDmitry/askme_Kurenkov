@@ -6,15 +6,12 @@
 
 {% block content %}
     {% include 'components/question_item_without_answer_count.html' %}
-
     <br>
     <div class="horizontal-line"></div>
 
     <!-- Элемент ответ -->
     {% for answer in answers %}
-        {% if answer.question_id == question.id %}
-            {% include 'components/answer.html' %}
-        {% endif %}
+        {% include 'components/answer.html' %}
     {% endfor %}
 
     <div class="horizontal-line"></div>
