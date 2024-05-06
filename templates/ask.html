@@ -5,7 +5,19 @@
 <title>Задать вопрос</title>
 
 {% block content %}
-    <form class="h-100">
+    <form class="h-100" method="POST" action="">
+        {% csrf_token %}
+        <!-- Строка ошибки -->
+        {% if form.errors %}
+            {% for error in form.non_field_errors %}
+                <!-- Отдельное поле для каждой ошибки -->
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <div class="row mt-4">
             <h1 class="mb-4">Новый вопрос</h1> <!-- Заголовок "Вопросы" -->
         </div>
@@ -14,7 +26,7 @@
                 <label for="title" class="form-label">Название</label>
             </div>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="title" placeholder="Введите название">
+                <input type="text" class="form-control" id="title" placeholder="Введите название" name="title" value="{{ form.title.value }}">
             </div>
         </div>
         <div class="row mt-4">
@@ -22,7 +34,7 @@
                 <label for="text" class="form-label">Текст</label>
             </div>
             <div class="col-md-8">
-                <textarea class="form-control mt-2" id="text" rows="5" placeholder="Введите текст"></textarea>
+                <textarea class="form-control mt-2" id="text" rows="5" placeholder="Введите текст" name="text">{{ form.text.value }}</textarea>
             </div>
         </div>
         <div class="row mt-4">
@@ -30,7 +42,7 @@
                 <label for="tags" class="form-label">Теги</label>
             </div>
             <div class="col-md-8">
-                <input type="text" class="form-control" id="tags" placeholder="Введите теги через запятую">
+                <input type="text" class="form-control" id="tags" placeholder="Введите теги через запятую" name="tags" value="{{ form.tags.value }}">
             </div>
         </div>
         <div class="row mt-4">

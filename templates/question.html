@@ -16,9 +16,22 @@
 
     <div class="horizontal-line"></div>
 
-    <div class="col-md-12 d-flex flex-column">
-        <label for="text"></label><textarea class="form-control flex-grow-1" id="text" rows="5" placeholder="Введите ответ"></textarea>
-        <br>
-        <button type="button" class="btn btn-primary">Добавить ответ</button>
-    </div>
+    <form class="h-100" method="POST" action="">
+        {% csrf_token %}
+        <!-- Строка ошибки -->
+        {% if form.errors %}
+            {% for error in form.non_field_errors %}
+                <!-- Отдельное поле для каждой ошибки -->
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="col-md-12 d-flex flex-column">
+            <label for="text"></label><textarea class="form-control flex-grow-1" id="text" rows="5" placeholder="Введите ответ" name="text"></textarea>
+            <br>
+            <button type="submit" class="btn btn-primary">Добавить ответ</button>
+        </div>
+    </form>
 {% endblock %}

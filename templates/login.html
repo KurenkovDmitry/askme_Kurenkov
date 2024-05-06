@@ -2,34 +2,42 @@
 
 {% load static %}
 
+{% load bootstrap4 %}
+
 <title>Авторизация</title>
 
 {% block content %}
-    <form class="h-100">
+    <form class="h-100" method="POST" action="">
+        {% csrf_token %}
         <div class="row mt-4">
             <h1 class="mb-4">Авторизация</h1> <!-- Заголовок "Вопросы" -->
         </div>
-        <!-- Строка ошибки -->
-        <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
-            Неверный логи или пароль!
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+
+        {% if login_form.errors %}
+            {% for error in login_form.non_field_errors %}
+                <!-- Отдельное поле для каждой ошибки -->
+                <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <div class="row mt-4">
-            <div class="col-md-2"><label for="login1" class="form-label">Логин</label></div>
-            <div class="col-md-8"><input type="text" class="form-control" id="login1" placeholder="Введите логин"></div>
+            <div class="col-md-2"><label for="username" class="form-label">Логин</label></div>
+            <div class="col-md-8"><input type="text" class="form-control" id="username" name="username" placeholder="Введите логин" value="{{ login_form.username.value }}"></div>
         </div>
         <div class="row mt-4">
             <div class="col-md-2"><label for="password" class="form-label">Пароль</label></div>
             <div class="col-md-8">
-                <input type="password" class="form-control" id="password" placeholder="Введите пароль">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль">
             </div>
         </div>
         <div class="row mt-4">
             <button type="submit" class="btn btn-primary mt-3">Авторизоваться</button>
         </div>
         <div class="row mt-4">
-            <a href="/templates/signup.html" class="text-center">Создать новый аккаунт</a>
+            <a href="{% url 'signup' %}" class="text-center">Создать новый аккаунт</a>
         </div>
     </form>
 {% endblock %}
