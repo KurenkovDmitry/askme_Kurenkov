@@ -1,0 +1,9 @@
+{% extends 'components/question_item_without_answer_count.html' %}
+
+{% load static %}
+
+{% block count %}
+    Ответов: {{ key.answers }} |
+{% endblock %}
+
+

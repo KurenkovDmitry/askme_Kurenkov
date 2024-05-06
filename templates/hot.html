@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+<title>Горячие вопросы</title>
+
+{% block content %}
+    <div class="row align-items-lg-center">
+        <div class="col-2">
+            <a href="{% url 'index' %}">Новые вопросы</a>
+        </div>
+        <div class="col-4">
+            <h1>Горячие вопросы</h1>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <!-- Элемент Вопрос-ответ -->
+        {% for question, key in questions.items %}
+            {% include 'components/question_item.html' %}
+        {% endfor %}
+
+        {% include 'components/pagination.html' with page=questions %}
+
+    </div>
+{% endblock %}
