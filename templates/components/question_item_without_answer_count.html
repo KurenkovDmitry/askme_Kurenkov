@@ -1,0 +1,41 @@
+{% load static %}
+
+<div class="qa-container">
+    <div class="row">
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+            <!-- Аватарка -->
+            <div class="align-items-center">
+                <img src="{% static "/img/avatar.jpg" %}" alt="Avatar" class="avatar">
+            </div>
+            <!-- Лайки и дизлайки -->
+            <div class="like-dislike mt-auto">
+                <label for="like{{ question.id }}"></label>
+                <input type="number" id="like{{ question.id }}" name="like" value="{{ question.reiting }}" class="like" onkeydown="return false;" onmousedown="return false;">
+                <button onclick="increaseValue('{{ question.id }}')">↑</button>
+                <button onclick="decreaseValue('{{ question.id }}')">↓</button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <!-- Вопрос -->
+                <h5><a href="{% url "question" question.id %}">{{ question.title }}</a></h5>
+            </div>
+            <div class="row">
+                <!-- Начало ответа -->
+                <p>{{ question.content }}</p>
+            </div>
+            <!-- Ссылки на ответы и список тегов -->
+            <div class="row tags mt-auto">
+                <small>
+                    {% block count %}
+                    {% endblock %}
+                    Теги:
+                    {% for tag in question.tags %}
+                        <span class="badge bg-primary">{{ tag }}</span>
+                    {% endfor %}
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+

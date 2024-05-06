@@ -2,15 +2,15 @@
 
 {% load static %}
 
-<title>Новые вопросы</title>
+<title>Горячие вопросы</title>
 
 {% block content %}
     <div class="row align-items-lg-center">
-        <div class="col-4">
-            <h1>Новые вопросы</h1>
-        </div>
         <div class="col-2">
-            <a href="{% url 'hot' %}">Горячие вопросы</a>
+            <a href="{% url 'index' %}">Новые вопросы</a>
+        </div>
+        <div class="col-4">
+            <h1>Горячие вопросы</h1>
         </div>
     </div>
 
