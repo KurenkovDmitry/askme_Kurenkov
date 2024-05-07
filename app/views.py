@@ -41,9 +41,6 @@ def hot(request):
 
 
 def question(request, give_question_id):
-    if not request.user.is_authenticated:
-        return redirect(reverse('login'))
-
     profile_av_ur = None
     if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url

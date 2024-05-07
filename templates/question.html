@@ -4,6 +4,8 @@
 
 <title>Вопрос: {{ question.id }}</title>
 
+<script src="{% static "/js/answer.js" %}"></script>
+
 {% block content %}
     {% include 'components/question_item_without_answer_count.html' %}
     <br>
@@ -11,7 +13,11 @@
 
     <!-- Элемент ответ -->
     {% for answer in answers %}
-        {% include 'components/answer.html' %}
+        {% if forloop.last %}
+            {% include 'components/answer_last.html' %}
+        {% else %}
+            {% include 'components/answer.html' %}
+        {% endif %}
     {% endfor %}
 
     <div class="horizontal-line"></div>
@@ -31,7 +37,14 @@
         <div class="col-md-12 d-flex flex-column">
             <label for="text"></label><textarea class="form-control flex-grow-1" id="text" rows="5" placeholder="Введите ответ" name="text"></textarea>
             <br>
-            <button type="submit" class="btn btn-primary">Добавить ответ</button>
+            {% if user.is_authenticated %}
+                <button type="submit" class="btn btn-primary">Добавить ответ</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary" disabled>Добавить ответ</button>
+                <div class="text-center mt-3">
+                    <p>Чтобы добавить ответ, пожалуйста, <a href="{% url 'login' %}">войдите</a>.</p>
+                </div>
+            {% endif %}
         </div>
     </form>
 {% endblock %}
