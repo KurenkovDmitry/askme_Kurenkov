@@ -16,7 +16,7 @@ from django.urls import reverse
 
 def index(request):
     profile_av_ur = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url
 
     posts, page, ran = models.Paginate.paginate(Questions.objects.get_new(), request, 10)
@@ -29,7 +29,7 @@ def index(request):
 
 def hot(request):
     profile_av_ur = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url
 
     posts, page, ran = models.Paginate.paginate(Questions.objects.get_hot(), request, 10)
@@ -45,7 +45,7 @@ def question(request, give_question_id):
         return redirect(reverse('login'))
 
     profile_av_ur = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url
 
     try:
@@ -137,26 +137,22 @@ def signup(request):
     else:
         form = RegisterForm()
 
-    # Заполнение формы данными, если они были отправлены, иначе оставить форму пустой
-    initial_data = {}
     if 'username' in request.POST:
-        initial_data['username'] = request.POST['username']
+        username = request.POST['username']
     else:
-        initial_data['username'] = ""
+        username = ""
     if 'email' in request.POST:
-        initial_data['email'] = request.POST['email']
+        email = request.POST['email']
     else:
-        initial_data['email'] = ""
+        email = ""
     if 'name' in request.POST:
-        initial_data['name'] = request.POST['name']
+        name = request.POST['name']
     else:
-        initial_data['name'] = ""
-
-    form = RegisterForm(initial=initial_data)
+        name = ""
 
     return render(request, 'signup.html', {'user': request.user, 'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
                                            'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-                                           'form': form})
+                                           'form': form, 'usn': username, 'em': email, 'na': name})
 
 
 def ask(request):
@@ -164,7 +160,7 @@ def ask(request):
         return redirect(reverse('login'))
 
     profile_av_ur = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url
 
     if request.method == 'POST':
@@ -250,7 +246,7 @@ def settings(request):
 
 def question_by_teg(request, tag):
     profile_av_ur = None
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.profiles.avatar:
         profile_av_ur = request.user.profiles.avatar.url
 
     tag = tag[:-1] if tag[-1] == '/' else tag
