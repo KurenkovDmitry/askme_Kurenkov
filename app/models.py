@@ -97,7 +97,7 @@ class ProfileGet:
 class Profiles(models.Model):
     name = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(upload_to='uploads/', blank=True, null=True, default="static/profile.png")
     create = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 

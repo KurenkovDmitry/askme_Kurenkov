@@ -1,6 +1,7 @@
 from django.contrib import auth
 from . import models
 from . import forms
+import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.http import Http404
@@ -10,20 +11,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
 def index(request):
-    profile_av_ur = None
-    if request.user.is_authenticated and request.user.profiles.avatar:
-        profile_av_ur = request.user.profiles.avatar.url
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     posts, page, ran = models.Paginate.paginate(Questions.objects.get_new(), request, 10)
     given = {'questions': models.ProfileGet(posts).get_profile_and_ans, 'user': request.user, 'page': page, 'range': ran,
              'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-             'profileava': profile_av_ur}
+             'profile': profile}
     return render(request, 'index.html', given)
 
 
@@ -253,3 +256,111 @@ def question_by_teg(request, tag):
              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
              'profileava': profile_av_ur}
     return render(request, 'questions_by_teg.html', given)
+
+
+@login_required
+@require_POST
+def like_dislike_question(request):
+    data = json.loads(request.body)
+    question_id = data.get('id')
+    action = data.get('type')
+    profile = request.user.profiles
+
+    try:
+        question = Questions.objects.get(id=question_id)
+        like, created = Likequestion.objects.get_or_create(
+            question_id=question, profile_id=profile,
+            defaults={'marker': action == 'like'}
+        )
+
+        if not created:
+            if action == 'like' and not like.marker:
+                question.rating += 2
+                like.marker = True
+            elif action == 'dislike' and like.marker:
+                question.rating -= 2
+                like.marker = False
+            else:
+                return JsonResponse({'rating': question.rating})
+        else:
+            if action == 'like':
+                question.rating -= 1
+            else:
+                question.rating += 1
+
+        like.save()
+        question.save()
+        return JsonResponse({'rating': question.rating})
+
+    except Questions.DoesNotExist:
+        return JsonResponse({'error': 'Question does not exist'}, status=404)
+
+
+@login_required
+@require_POST
+def like_dislike_answer(request):
+    data = json.loads(request.body)
+    answer_id = data.get('id')
+    action = data.get('type')
+    profile = request.user.profiles
+
+    try:
+        answer = Answers.objects.get(id=answer_id)
+        like, created = Likeanswers.objects.get_or_create(
+            answer_id=answer, profile_id=profile,
+            defaults={'marker': action == 'like'}
+        )
+
+        if not created:
+            if action == 'like' and not like.marker:
+                answer.rating += 2
+                like.marker = True
+            elif action == 'dislike' and like.marker:
+                answer.rating -= 2
+                like.marker = False
+            else:
+                return JsonResponse({'rating': answer.rating})
+        else:
+            if action == 'like':
+                answer.rating -= 1
+            else:
+                answer.rating += 1
+
+        like.save()
+        answer.save()
+        return JsonResponse({'rating': answer.rating})
+
+    except Answers.DoesNotExist:
+        return JsonResponse({'error': 'Answer does not exist'}, status=404)
+
+
+@login_required
+@require_POST
+def set_correct_answer(request):
+    import json
+    data = json.loads(request.body)
+    answer_id = data.get('answer_id')
+    is_checked = data.get('is_checked')
+
+    print(f"Answer ID: {answer_id}, Is Checked: {is_checked}")
+
+    try:
+        answer = Answers.objects.get(id=answer_id)
+        question = answer.question_id
+
+        print(f"User ID: {request.user.id}, Author ID: {question.profile_id.id}")
+
+        if request.user.id != question.profile_id.id:
+            return JsonResponse({'status': 'error', 'message': 'Вы не автор этого вопроса.'})
+
+        # Сброс всех других правильных ответов
+        Answers.objects.filter(question_id=question, right=True).update(right=False)
+
+        answer.right = is_checked
+        answer.save()
+
+        return JsonResponse({'status': 'success'})
+    except Answers.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Ответ не найден.'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
