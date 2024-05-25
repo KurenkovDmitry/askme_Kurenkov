@@ -57,6 +57,33 @@ function decreaseValueAns(answerId) {
     sendLikeDislike(likeDislikeAnswerUrl, answerId, 'dislike');
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.answer-checkbox');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const answerId = this.dataset.answerId;
+            const questionId = this.closest('.qa-container').dataset.questionId;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/set_correct_answer/', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'error') {
+                        alert(response.message);
+                    }
+                }
+            };
+
+            xhr.send(`question_id=${questionId}&answer_id=${answerId}`);
+        });
+    });
+});
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

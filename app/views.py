@@ -31,22 +31,22 @@ def index(request):
 
 
 def hot(request):
-    profile_av_ur = None
-    if request.user.is_authenticated and request.user.profiles.avatar:
-        profile_av_ur = request.user.profiles.avatar.url
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     posts, page, ran = models.Paginate.paginate(Questions.objects.get_hot(), request, 10)
     given = {'questions': models.ProfileGet(posts).get_profile_and_ans, 'user': request.user, 'page': page, 'range': ran,
              'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-             'profileava': profile_av_ur}
+             'profile': profile}
     return render(request, 'hot.html', given)
 
 
 def question(request, give_question_id):
-    profile_av_ur = None
-    if request.user.is_authenticated and request.user.profiles.avatar:
-        profile_av_ur = request.user.profiles.avatar.url
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     try:
         quest = models.Questions.objects.get(id=give_question_id)
@@ -70,7 +70,7 @@ def question(request, give_question_id):
     given = {'question': quest, 'answers': models.Answers.objects.filter(question_id=give_question_id),
              'user': request.user, 'key': models.Gettegs(quest), 'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-             'profileava': profile_av_ur, 'form': form}
+             'profile': profile, 'form': form}
 
     return render(request, 'question.html', given)
 
@@ -159,9 +159,9 @@ def ask(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
 
-    profile_av_ur = None
-    if request.user.is_authenticated and request.user.profiles.avatar:
-        profile_av_ur = request.user.profiles.avatar.url
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -187,14 +187,16 @@ def ask(request):
 
     return render(request, 'ask.html', {'user': request.user, 'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
                                         'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-                                        'form': form, 'profileava': profile_av_ur})
+                                        'form': form, 'profile': profile})
 
 
 def settings(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
 
-    profile_ava = None
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     initial_data = {
         'username': request.user.username,
@@ -210,7 +212,6 @@ def settings(request):
             username = form['username'].value()
             email = form['email'].value()
             name = form['name'].value()
-            avatar = form['avatar'].value()
 
             # Обновление данных пользователя
             user = request.user
@@ -227,8 +228,8 @@ def settings(request):
             # Обновление данных профиля
             if name:
                 profile.name = name
-            if avatar:
-                profile.avatar = avatar
+            if 'avatar' in request.FILES:
+                profile.avatar = request.FILES['avatar']
             profile.save()
 
             profile_ava = profile.avatar
@@ -241,20 +242,20 @@ def settings(request):
 
     return render(request, 'settings.html', {'user': request.user, 'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
                                              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-                                             'form': form, 'profileava': request.user.profiles.avatar})
+                                             'form': form, 'profile': profile})
 
 
 def question_by_teg(request, tag):
-    profile_av_ur = None
-    if request.user.is_authenticated and request.user.profiles.avatar:
-        profile_av_ur = request.user.profiles.avatar.url
+    profile = None
+    if request.user.is_authenticated:
+        profile = Profiles.objects.filter(user=request.user).first()
 
     tag = tag[:-1] if tag[-1] == '/' else tag
     posts, page, ran = models.Paginate.paginate(models.Questions.objects.get_tag(tag), request)
     given = {'questions': models.Tagsquestions(posts).answers, 'tag': tag, 'user': request.user, 'page': page, 'range': ran,
              'tags': Tags.objects.all()[:min(6, Tags.objects.count())],
              'users': Profiles.objects.all()[:min(6, Profiles.objects.count())],
-             'profileava': profile_av_ur}
+             'profile': profile}
     return render(request, 'questions_by_teg.html', given)
 
 
@@ -337,30 +338,27 @@ def like_dislike_answer(request):
 @login_required
 @require_POST
 def set_correct_answer(request):
-    import json
-    data = json.loads(request.body)
-    answer_id = data.get('answer_id')
-    is_checked = data.get('is_checked')
-
-    print(f"Answer ID: {answer_id}, Is Checked: {is_checked}")
+    user = request.user
+    question_id = request.POST.get('question_id')
+    answer_id = request.POST.get('answer_id')
 
     try:
+        question = Questions.objects.get(id=question_id)
         answer = Answers.objects.get(id=answer_id)
-        question = answer.question_id
 
-        print(f"User ID: {request.user.id}, Author ID: {question.profile_id.id}")
+        if question.profile_id_id != user.profiles.id:
+            return JsonResponse(
+                {'status': 'error', 'message': 'You are not authorized to mark this answer as correct.'})
 
-        if request.user.id != question.profile_id.id:
-            return JsonResponse({'status': 'error', 'message': 'Вы не автор этого вопроса.'})
-
-        # Сброс всех других правильных ответов
+        # Снять предыдущий правильный ответ, если он есть
         Answers.objects.filter(question_id=question, right=True).update(right=False)
 
-        answer.right = is_checked
+        # Установить новый правильный ответ
+        answer.right = True
         answer.save()
 
         return JsonResponse({'status': 'success'})
+    except Questions.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Question does not exist.'})
     except Answers.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Ответ не найден.'})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
+        return JsonResponse({'status': 'error', 'message': 'Answer does not exist.'})

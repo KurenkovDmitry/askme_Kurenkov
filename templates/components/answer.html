@@ -1,16 +1,12 @@
 {% load static %}
 
-<script>
-    window.csrfToken = "{{ csrf_token }}";
-</script>
-
-<div class="qa-container">
+<div class="qa-container" data-question-id="{{ question.id }}">
     <div class="row">
         <div class="col-md-4 d-flex flex-column justify-content-between">
             <!-- Аватарка -->
             <div class="align-items-center">
                 <span class="circle-image">
-                    <img src="/static/img/avatar.jpg" alt="Avatar" class="avatar">
+                    <img src="{{ MEDIA_URL }}{{ answer.profile_id.avatar }}" alt="Avatar" class="avatar">
                 </span>
             </div>
             <!-- Лайки и дизлайки -->
@@ -24,8 +20,8 @@
         <div class="col-md-8">
             <p>{{ answer.answer }}</p>
             <div class="form-check">
-                <input class="form-check-input answer-checkbox" type="checkbox" id="answerCheckbox" data-answer-id="{{ answer.id }}" {% if answer.right %}checked{% endif %}>
-                <label class="form-check-label" for="answerCheckbox">Верный ответ</label>
+                <input class="form-check-input answer-checkbox" type="checkbox" id="answerCheckbox{{ answer.id }}" data-answer-id="{{ answer.id }}" {% if answer.right %}checked{% endif %}>
+                <label class="form-check-label" for="answerCheckbox{{ answer.id }}">Верный ответ</label>
             </div>
         </div>
     </div>

@@ -5,11 +5,7 @@
         <div class="col-md-4 d-flex flex-column justify-content-between">
             <!-- Аватарка -->
             <div class="align-items-center">
-                {% if key.profile.avatar %}
-                    <img src="{% static 'img' %}{{ key.profile.avatar.url }}" alt="Avatar" class="avatar">
-                {% else %}
-                    <img src="{% static "/img/avatar.jpg" %}" alt="Avatar" class="avatar">
-                {% endif %}
+                <img src="{{MEDIA_URL}}{{ key.profile.avatar }}" alt="Avatar" class="avatar">
             </div>
             <!-- Лайки и дизлайки -->
             <div class="like-dislike mt-auto">

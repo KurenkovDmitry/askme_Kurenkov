@@ -39,11 +39,7 @@
             <div class="col-md-2"><label for="avatar1" class="form-label">Изменить аватар</label></div>
             <div class="col-md-8">
                 <div class="d-flex flex-column mb-3">
-                    {% if profileava %}
-                        <img alt="Avatar" class="img-fluid maxiimg" src="{{ form.avatar.value.url }}">
-                    {% else %}
-                        <img alt="Avatar" class="img-fluid maxiimg" src="{% static "/img/../media/static/profile.png" %}">
-                    {% endif %}
+                    <img src="{{ MEDIA_URL }}{{ profile.avatar }}" alt="Profile" class="img-fluid maxiimg">
 
                     <div class="input-group mt-3">
                         <input type="file" class="form-control" id="avatar1" accept="image/*" name="avatar">
